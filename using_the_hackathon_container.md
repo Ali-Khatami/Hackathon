@@ -24,7 +24,13 @@ The first step in registering a new app is creating a unique AppID. This AppID w
 
 Go to [Manage Your Containers & Apps](http://developer-openf2.markitqa.com/Manage) to register a new app.
 
-**Note:** Remember to provide a `ManifestURL` using the **Production field on Step 3**. Doing so will automatically link your app(s) with the [Hackathon container](http://demo.markitqa.com/Hackathon).
+#### Heads up!
+
+Remember to provide a `ManifestURL` using the **Production** field on Step 3. Doing so will automatically link your app(s) with the [Hackathon container](http://demo.markitqa.com/Hackathon). 
+
+#### Double Heads up!
+
+You can put _any_ `ManifestURL` accessible to the browser loading the Hackathon container in the Production ManifestURL field, even your local `wks` hostname.
 
 ### Viewing Apps
 
@@ -32,5 +38,44 @@ Go to [Manage Your Containers & Apps](http://developer-openf2.markitqa.com/Manag
 
 [http://demo.markitqa.com/Hackathon/Auth](http://demo.markitqa.com/Hackathon/Auth)
 
-The container will make a request to the F2 Registry APIs and pull in all of your apps _(as long as the `ManifestURL` is provided)_.
+The container will make a request to the F2 Registry APIs and pull in all of your apps _(as long as the `ManifestURL` is provided)_. 
 
+#### Back to Default
+
+If you've changed your user on the container and want to get back to the info@openf2.org account, the best way to do so is to just clear your cookies for the site.
+
+## Listening to Hackathon Container Events
+
+If you want your app to listen to container-broadcasted Context events, you need to add an `F2.Events` listener in your [App Class](http://docs.openf2.org/app-development.html#scripts-1). The F2 spec details this out in [Container-to-App Context](http://docs.openf2.org/app-development.html#container-to-app-context) and this sample code below does the trick.
+
+The container will emit a "symbol change" event:
+
+`
+F2.Events.emit(
+    F2.Constants.Events.CONTAINER_SYMBOL_CHANGE, 
+    { 
+        symbol: "AAPL", 
+        name: "Apple, Inc." 
+    }
+);
+`
+
+Your app will listen by subscribing:
+
+`
+F2.Events.on(
+    F2.Constants.Events.CONTAINER_SYMBOL_CHANGE, 
+    function(data){
+        F2.log("The symbol was changed to " + data.symbol);
+    }
+);
+`
+
+The Context message transmitted _can be any javascript object_ but in the case of the type-ahead search at the top of the container, the Context message will be an object with two key-value pairs containing symbol and name.
+
+`
+{ 
+    symbol: "AAPL", 
+    name: "Apple, Inc." 
+}
+`
