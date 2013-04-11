@@ -65,7 +65,7 @@ Finally push it to GitHub:
 
 Once changes are committed to `gh-pages`, you'll need to wait a couple of minutes for them to appear. Then rejoice!
 
-[`http://YOUR_USER_NAME.github.io/Hackathon/a_unique_name/`](http://YOUR_USER_NAME.github.io.github.io/Hackathon/)
+[`http://YOUR_USER_NAME.github.io/Hackathon/`](http://YOUR_USER_NAME.github.io.github.io/Hackathon/)
 
 ## Help
 
