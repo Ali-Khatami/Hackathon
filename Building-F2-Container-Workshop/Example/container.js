@@ -1,11 +1,20 @@
 (function()
 {
     var $containerDiv = $("div.container:first");
+
+    $("button.sayHelloButton:first").on("click", function(){
+        F2.Events.emit("containerExampleEvent", [{foo: "bar"}]);
+    });
+
+    F2.Events.on("containerExampleAppEvent", function(){
+        F2.log("App talked to container: ", arguments);
+    });
     
     /**
      * Init F2
      */
     F2.init({
+        containerID: 'com_markit_on_demand_building_container_workshop',
         beforeAppRender: function(app){
             
             var appRoot = '<section class="span' + app.minGridSize + '"></section>';
